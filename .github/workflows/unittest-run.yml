@@ -1,0 +1,40 @@
+name: 'run.py TODO: CHANGE NAME'
+on:
+  push:
+    paths:
+      - run.py
+      - .github/workflows/unittest-run.yml
+
+jobs:
+  unittests:
+    strategy:
+      fail-fast: false
+      max-parallel: 1
+      matrix:
+        os: [ubuntu-latest] 
+        python-version: [3.8]        
+        python-venv: [""]        
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v2     
+      - uses: gridai-actions/gridai-login@main
+        with:
+          python-version: ${{ matrix.python-version }}
+          python-venv: ${{ matrix.python-venv }}
+          gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
+          gridai-key: ${{ secrets.GRIDAI_KEY }}
+      - uses: gridai-actions/gridai-run@main
+        with:
+          script-dir: ${GITHUB_WORKSPACE}
+          script-name: run.py
+      # example assert
+      - run: |
+          cd ${GITHUB_WORKSPACE}
+          echo list of artifacts 
+          find grid_artifacts -type f -print | sort
+          echo file count group by extensions
+          find grid_artifacts -name "*.*"  | awk -F. '{print $NF}' | sort | uniq -c | tee extension.count
+          echo assert by expected file count
+          count_log_suffix=$(awk '$2=="log" {print $1}' extension.count)
+          if [ ! -z "${count_log_suffix}" -a "${count_log_suffix}" -ne 2 ]; then exit 1; fi
