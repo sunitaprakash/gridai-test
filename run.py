@@ -1,65 +1,67 @@
 import os
-import numpy as np
-from argparse import ArgumentParser
 import torch
-from torch.utils.tensorboard import SummaryWriter
+import torch.nn.functional as F
+from torchvision.datasets import MNIST
+from torchvision import transforms
+from torch.utils.data import DataLoader
+import pytorch_lightning as pl
+from torch.utils.data import random_split
+from torchmetrics.functional import accuracy
+
 import wandb
-#from pytorch_lightning.loggers import WandbLogger
-#from pytorch_lightning import Trainer
+from pytorch_lightning.loggers import WandbLogger
+from pytorch_lightning import Trainer
 
 
-wandb.init(project="my-test-wandb", entity="sunitaprakash")
-#wandb_logger = WandbLogger(project="my-test-wandb")
-#trainer = Trainer(logger=wandb_logger)
+
+#wandb.init(project="my-test-wandb", entity="sunitaprakash")
+wandb_logger = WandbLogger(project="my-test-wandb")
 #trainer.fit(model, datamodule)
 
+class LitModel(pl.LightningModule):
 
-# add arguments 
-parser = ArgumentParser()
-parser.add_argument('--number', default=0, type=int)
-parser.add_argument('--food_item', default='burgers', type=str)
-parser.add_argument('--data', default=None, type=str)
-args = parser.parse_args()
+    def __init__(self, lr:float = 0.0001, batch_size:int = 32):
+        super().__init__()
+        self.save_hyperparameters()
+        self.layer_1 = torch.nn.Linear(28 * 28, 128)
+        self.layer_2 = torch.nn.Linear(128, 10)
 
-# fake tensorboard logs (fake loss)
-writer = SummaryWriter(log_dir="lightning_logs/hello")
-offset = np.random.uniform(0, 5, 1)[0]
-for x in range(1, 10000):
-    y = -np.log(x) + offset + (np.sin(x) * 0.1)
-    writer.add_scalar('y=-log(x) + c + 0.1sin(x)', y, x)
-    writer.add_scalar('fake_metric', -y, x)
+    def forward(self, x):
+        x = x.view(x.size(0), -1)
+        x = self.layer_1(x)
+        x = F.relu(x)
+        x = self.layer_2(x)
+        return x
 
-writer.close()
+    def configure_optimizers(self):
+        optimizer = torch.optim.Adam(self.parameters(), lr=self.hparams.lr)
+        return optimizer
 
-# print data if available
-if args.data is not None:
-    files = list(os.walk(args.data))
-    print('-' * 50)
-    print(f'DATA FOUND! {len(files)} files found at dataset {args.data}')
+    def training_step(self, batch, batch_idx):
+        x, y = batch
+        y_hat = self(x)
+        loss = F.cross_entropy(y_hat, y)
+        self.log('train_loss', loss)
+        self.log('val_acc', accuracy(y_hat, y))
+        return loss
 
-# print GPUs, params and random tensors
-print('-' * 50)
-print(f'GPUS: There are {torch.cuda.device_count() if torch.cuda.is_available() else 0} GPUs on this machine')
-print('-' * 50)
-print(f'PARAMS: I want to eat: {args.number} {args.food_item}')
-print('-' * 50)
-print('i can run any ML library like numpy, pytorch lightning, sklearn pytorch, keras, tensorflow')
-print('torch:', torch.rand(1), 'numpy', np.random.rand(1))
+if __name__ == '__main__':
+    from argparse import ArgumentParser
 
-# write some artifacts
-f = open("weights.pt", "a")
-f.write("fake weights")
-f.close()
+    parser = ArgumentParser()
+    parser.add_argument('--gpus', type=int, default=None)
+    parser.add_argument('--lr', type=float, default=1e-3)
+    parser.add_argument('--batch_size', type=int, default=32)
+    parser.add_argument('--max_epochs', type=int, default=10)
+    parser.add_argument('--data_dir', type=str, default=os.getcwd())
+    args = parser.parse_args()
 
-# write some artifacts
-f = open("weights.log", "a")
-f.write("fake weights")
-f.close()
+    dataset = MNIST(args.data_dir, download=True, transform=transforms.ToTensor())
+    train_loader = DataLoader(dataset, batch_size=args.batch_size)
 
-with open("results.log", "w") as outf:
-    outf.write("Success with results.log!\n")
-outf.close()
+    # init model
+    model = LitModel(lr=args.lr)
 
-with open("results.pt", "w") as outf:
-    outf.write("Success with results.pt!\n")
-outf.close()
+    # most basic trainer, uses good defaults (auto-tensorboard, checkpoints, logs, and more)
+    trainer = pl.Trainer(gpus=args.gpus, max_epochs=args.max_epochs, logger=wandb_logger)
+    trainer.fit(model, train_loader)
