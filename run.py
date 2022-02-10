@@ -3,6 +3,16 @@ import numpy as np
 from argparse import ArgumentParser
 import torch
 from torch.utils.tensorboard import SummaryWriter
+import wandb
+#from pytorch_lightning.loggers import WandbLogger
+#from pytorch_lightning import Trainer
+
+
+wandb.init(project="my-test-wandb", entity="sunitaprakash")
+#wandb_logger = WandbLogger(project="my-test-wandb")
+#trainer = Trainer(logger=wandb_logger)
+#trainer.fit(model, datamodule)
+
 
 # add arguments 
 parser = ArgumentParser()
