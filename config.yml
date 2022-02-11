@@ -1,0 +1,22 @@
+compute:
+  provider:
+    credentials: xxxx
+    region: us-east-1
+    vendor: aws
+  train:
+    cpus: 1
+    disk_size: 200
+    gpus: 0
+    instance: g4dn.xlarge
+    max_nodes: 10
+    datastore_name: null
+    local_dir: true
+    datastore_version: null
+    datastore_mount_dir: null
+    memory: null
+    nodes: 0
+    scale_down_seconds: 1800
+    framework: lightning
+    environment:
+      GRID_URL: "https://grid.ai"
+      WANDB_API_KEY: "8ded3a9668a2db578d556d71bb2a838c62c3a47b"
