@@ -1,3 +1,4 @@
-torch
-pytorch-lightning[‘loggers’]
 torchmetrics
+torchvision
+pytorch-lightning
+wandb
