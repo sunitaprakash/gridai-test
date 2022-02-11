@@ -6,7 +6,7 @@ on:
       grid-args:
         required: true
         default: --config config.yml --instance_type g4dn.xlarge
-        description: test requirements
+        description: test wandb
 
 jobs:
   gridai-requirements:
