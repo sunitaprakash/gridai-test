@@ -1,0 +1,26 @@
+name: "test Environment variable"
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_name:
+        required: true
+        type: string
+
+jobs:
+  gridai-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gridai-actions/gridai-login@v0
+        with:
+          gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
+          gridai-key: ${{ secrets.GRIDAI_KEY }}
+              
+      - id: gridai-obj-status
+        run: |
+          # failed can flipped to running.  check 3 times for flip flop.
+          export ENV_PWD=`pwd`
+          echo $ENV_PWD
+          ls -al
+        shell: bash
