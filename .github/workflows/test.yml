@@ -20,10 +20,10 @@ jobs:
       - id: gridai-obj-status
         run: |
           # failed can flipped to running.  check 3 times for flip flop.
-          RUN_STATUS=$(grid status ubiquitous-sturgeon-427 | grep ubiquitous-sturgeon-427 | awk '{print $6}')
+          export RUN_STATUS="$(grid status ubiquitous-sturgeon-427 | grep ubiquitous-sturgeon-427 | awk '{print $6}')"
           export SESSION_STATUS=$(grid session | awk '{print $2 "," $4}' | grep Test-Wandb | awk -F, '{print $2}')
-          echo SESSION_STATUS $SESSION_STATUS
-          echo RUN_STATUS $RUN_STATUS
+          echo "SESSION_STATUS $SESSION_STATUS"
+          echo "RUN_STATUS $RUN_STATUS"
           export ENV_PWD=`pwd`
           echo ENV_pwd $ENV_PWD
           ls -al
