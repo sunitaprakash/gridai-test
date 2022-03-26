@@ -21,6 +21,6 @@ jobs:
         run: |
           # failed can flipped to running.  check 3 times for flip flop.
           export ENV_PWD=`pwd`
-          echo $ENV_PWD
+          echo ENV_pwd $ENV_PWD
           ls -al
         shell: bash
