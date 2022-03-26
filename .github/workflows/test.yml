@@ -19,11 +19,14 @@ jobs:
               
       - id: gridai-obj-status
         run: |
+          ::set-output name=RUN_STATUS2::$(grid status ubiquitous-sturgeon-427| grep ubiquitous-sturgeon-427| awk '{print $6}')
+          echo "Run status : ${{ steps.run-status.outputs.RUN_STATUS2 }}"
           # failed can flipped to running.  check 3 times for flip flop.
           export RUN_STATUS="$(grid status ubiquitous-sturgeon-427 | grep ubiquitous-sturgeon-427 | awk '{print $6}')"
           echo "RUN_STATUS $RUN_STATUS"
           export RUN_STATUS1=$(grid status)
-          export ENV_PWD=$(`pwd` | grep    )
+          echo "RUN_STATUS $RUN_STATUS1"
+          export ENV_PWD=$(`pwd` | grep work  )
           echo ENV_pwd $ENV_PWD
           ls -al
         shell: bash
