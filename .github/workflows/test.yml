@@ -24,7 +24,10 @@ jobs:
           echo "RUN_STATUS $RUN_STATUS"
           export RUN_STATUS1=$(grid status ubiquitous-sturgeon-427)
           echo "RUN_STATUS $RUN_STATUS1"
-          export ENV_PWD=$(`pwd` | grep work  )
+          export ENV_PWD='pwd'
+          export ENV2=$($ENV_PWD | grep work)
+          echo ENV $ENV2
+          export ENV_PWD=$(`pwd` | grep work)
           echo ENV_pwd $ENV_PWD
           ls -al
         shell: bash
