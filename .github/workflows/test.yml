@@ -25,8 +25,7 @@ jobs:
           echo $RUN_STATUS_T1
           export RUN_STATUS_T2=$(grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-…)
           echo $RUN_STATUS_T2
-          export RUN_STATUS=$(grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-sturgeon-427 | awk -F, '{print $2}')
-          grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-sturgeon-427 | awk -F, '{print $2}'
+          export RUN_STATUS=$(grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-… | awk -F, '{print $2}')
           export SESSION_STATUS=$(grid session | awk '{print $2 "," $4}' | grep test-wandb | awk -F, '{print $2}')
           echo $SESSION_STATUS
           sleep 5
