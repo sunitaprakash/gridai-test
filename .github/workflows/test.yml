@@ -25,7 +25,7 @@ jobs:
           export SESSION_STATUS=$(grid session | awk '{print $2 "," $4}' | grep test-wandb | awk -F, '{print $2}')
           echo $SESSION_STATUS
           sleep 5
-          echo "RUN_STATUS $RUN_STATUS"
+          echo $RUN_STATUS
           grid status ubiquitous-sturgeon-427
           export RUN_STATUS1=$(grid status ubiquitous-sturgeon-427)
           export RUN_STATUS2=$(RUN_STATUS1 | grep ubiquitous-sturgeon-427 | awk '{print $6}')
