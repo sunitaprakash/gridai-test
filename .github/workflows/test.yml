@@ -20,8 +20,10 @@ jobs:
       - id: gridai-obj-status
         run: |
           # failed can flipped to running.  check 3 times for flip flop.
+          grid status ubiquitous-sturgeon-427
           export RUN_STATUS=$(grid status ubiquitous-sturgeon-427 | grep ubiquitous-sturgeon-427 | awk '{print $6}')
           echo "RUN_STATUS $RUN_STATUS"
+          grid status ubiquitous-sturgeon-427
           export RUN_STATUS1=$(grid status ubiquitous-sturgeon-427)
           export RUN_STATUS2=$(RUN_STATUS1 | grep ubiquitous-sturgeon-427 | awk '{print $6}')
           echo "RUN_STATUS $RUN_STATUS2"
