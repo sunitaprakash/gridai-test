@@ -23,7 +23,7 @@ jobs:
           grid status ubiquitous-sturgeon-427
           export RUN_STATUS_T1=$(grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}')
           echo $RUN_STATUS_T1
-          export RUN_STATUS_T2=$(grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-sturgeon-427)
+          export RUN_STATUS_T2=$(grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-…)
           echo $RUN_STATUS_T2
           export RUN_STATUS=$(grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-sturgeon-427 | awk -F, '{print $2}')
           grid status ubiquitous-sturgeon-427 | awk '{print $2 "," $6}' | grep ubiquitous-sturgeon-427 | awk -F, '{print $2}'
