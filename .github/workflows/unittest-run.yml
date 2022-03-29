@@ -13,10 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: gridai-actions/gridai-login@main --add-module-version 0.8.15
+      - uses: gridai-actions/gridai-login@main
         with:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}
+          gridai-python-modules: lightning-grid
+          add-module-version: 0.8.15
               
       - id: gridai-obj-status
         run: |
