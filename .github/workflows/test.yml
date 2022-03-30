@@ -21,12 +21,12 @@ jobs:
         run: |
           # failed can flipped to running.  check 3 times for flip flop.
           export COLUMNS={512}
-          export RUN_STATUS_T1=$(grid status ${{ secrets.GRIDAI_RUNNAME }}  | grep ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}')
-          echo $RUN_STATUS_T1
-         # export RUN_STATUS_T2=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ubiquitous-…)
-         # echo $RUN_STATUS_T2
-         # export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ubiquitous-… | awk -F, '{print $2}')
-         # echo $RUN_STATUS
+          # export RUN_STATUS_T1=$(grid status ${{ secrets.GRIDAI_RUNNAME }}  | grep ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}')
+          # echo $RUN_STATUS_T1
+          # export RUN_STATUS_T2=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }})
+          # echo $RUN_STATUS_T2
+          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} | awk -F, '{print $2}')
+          echo $RUN_STATUS
         shell: bash
         
  
