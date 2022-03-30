@@ -28,8 +28,6 @@ jobs:
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ubiquitous-… | awk -F, '{print $2}')
           echo $RUN_STATUS
           export RUN_STATUS1=$(grid status ${{ secrets.GRIDAI_RUNNAME }})
-          export RUN_STATUS2=$(RUN_STATUS1 | grep ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $6}')
-          echo "RUN_STATUS $RUN_STATUS2"
         shell: bash
         
  
