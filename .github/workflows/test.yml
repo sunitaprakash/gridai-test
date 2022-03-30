@@ -27,7 +27,7 @@ jobs:
           # echo $RUN_STATUS_T2
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} | awk -F, '{print $2}')
           echo $RUN_STATUS
-          export RUN_DURATION=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $8}' | grep${{ secrets.GRIDAI_RUNNAME }} | cut -d ':' -f 1 | cut -d ',' -f 2 | cut -d '-' -f 2) 
+          export RUN_DURATION=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $8}' | grep ${{ secrets.GRIDAI_RUNNAME }} | cut -d ':' -f 1 | cut -d ',' -f 2 | cut -d '-' -f 2) 
           echo $RUN_DURATION
         shell: bash
         
