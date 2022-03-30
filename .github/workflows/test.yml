@@ -16,7 +16,6 @@ jobs:
         with:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}
-          gridai-python-modules: "lightning-grid=0.8.15"
           add-module-version: false
               
       - id: gridai-obj-status
