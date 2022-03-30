@@ -16,8 +16,6 @@ jobs:
         with:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}
-         # gridai-python-modules: lightning-grid==0.8.15
-         # add-module-version: false
               
       - id: gridai-obj-status
         run: |
@@ -43,3 +41,8 @@ jobs:
           echo ENV_pwd $ENV_PWD
           ls -al
         shell: bash
+        
+      - id: gridai-obj-status2
+        run: |
+         gridai.py run ubiquitous-sturgeon-42 --gha True
+         shell: bash  
