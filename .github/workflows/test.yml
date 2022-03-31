@@ -25,7 +25,7 @@ jobs:
       - id: gridai-duration
         run: |
           export COLUMNS={512}
-          export RUN_DURATION=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $8}' | grep ${{ secrets.GRIDAI_RUNNAME }} | cut -d ':' -f 1 | cut -d ',' -f 2 | cut -d '-' -f 2) 
+          export RUN_DURATION=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $8}' | grep ${{ secrets.GRIDAI_RUNNAME }} | cut -d ':' -f 1 | cut -d ',' -f 2 | cut -d '-' -f 2 ) 
           echo "Duration: $RUN_DURATION"
         shell: bash
         
