@@ -17,20 +17,16 @@ jobs:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}
               
-      - id: gridai-obj-status
+      - id: gridai-run-status
         run: |
-          export COLUMNS={512}
-          export RUN_STATUS2=$(grid status ${{ secrets.GRIDAI_RUNNAME }} |  awk '{print $2 "," $6}')
-          echo "runStatus: $RUN_STATUS2"
           export COLUMNS={512}
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} | awk -F, '{print $2}')
           echo "runstatus $RUN_STATUS"
+      - id: gridai-duration
+        run: |
           export COLUMNS={512}
           export RUN_DURATION=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $8}' | grep ${{ secrets.GRIDAI_RUNNAME }} | cut -d ':' -f 1 | cut -d ',' -f 2 | cut -d '-' -f 2) 
           echo "Duration: $RUN_DURATION"
-          export COLUMNS={512}
-          export RUN_DURATION2=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $8}' | grep ${{ secrets.GRIDAI_RUNNAME }} | awk -F, '{print $2}' |  cut -d '-' -f 2 | cut -d ':' -f 1)
-          echo "Duration2: $RUN_DURATION2"
         shell: bash
         
  
