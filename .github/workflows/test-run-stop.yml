@@ -18,15 +18,11 @@ jobs:
       - id: gridai-prunname
         run: |
            export PART_NAME=$(echo ${{ secrets.GRIDAI_RUNNAME }} | cut -d '-' -f 1 )
-           echo $PART_NAME
-           export P_RUN_NAME=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | cut -d '-' -f 1 | awk -F, '{print $1}')
-           echo $P_RUN_NAME
+           echo "runname: $PART_NAME"
       - id: gridai-status
         run: |
           export COLUMNS={512}
           sleep 30
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep $PART_NAME | awk -F, '{print $2}')
-          echo $RUN_STATUS
-          export RUN_STATUS2=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}')
-          echo $RUN_STATUS2
+          echo "status: $RUN_STATUS"
         shell: bash
