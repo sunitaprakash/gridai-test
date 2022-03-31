@@ -15,11 +15,15 @@ jobs:
         with:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}
+      - id: p-runname
+         run: |
+           export P_RUN_NAME=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | cut cut -d '-' -f 1)
+           echo $P_RUN_NAME
       - id: gridai-status
         run: |
           export COLUMNS={512}
           sleep 30
-          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} )
+          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' )
           echo $RUN_STATUS
           export RUN_STATUS2=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}')
           echo $RUN_STATUS2
