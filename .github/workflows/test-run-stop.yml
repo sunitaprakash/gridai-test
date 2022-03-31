@@ -1,4 +1,4 @@
-name: "test Environment variable"
+name: "test Run Stop"
 
 on:
   workflow_dispatch:
