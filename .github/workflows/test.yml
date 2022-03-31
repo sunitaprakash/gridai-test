@@ -17,12 +17,12 @@ jobs:
           gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
           gridai-key: ${{ secrets.GRIDAI_KEY }}
               
-      - id: gridai-run-status
+      - id: gridai-status
         run: |
           export COLUMNS={512}
           # export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} | awk -F, '{print $2}')
-          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }}
-          echo "runstatus $RUN_STATUS"
+          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} )
+          echo $RUN_STATUS
         shell: bash
         
  
