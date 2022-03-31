@@ -21,4 +21,6 @@ jobs:
           sleep 10
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} )
           echo $RUN_STATUS
+          export RUN_STATUS2=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}')
+          echo $RUN_STATUS2
         shell: bash
