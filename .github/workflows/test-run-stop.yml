@@ -23,6 +23,6 @@ jobs:
         run: |
           export COLUMNS={512}
           sleep 30
-          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep $PART_NAME | awk -F, '{print $2}')
+          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep $PART_NAME | cut -d ',' -f 2 )
           echo "status: $RUN_STATUS"
         shell: bash
