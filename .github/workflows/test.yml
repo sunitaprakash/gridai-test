@@ -18,7 +18,8 @@ jobs:
               
       - id: gridai-status
         run: |
-          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} | awk -F, '{print $2}')
+          export RUN_STATUS1=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | grep ${{ secrets.GRIDAI_RUNNAME }} | awk -F, '{print $2}')
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} )
-          echo $RUN_STATUS
+          export $RUN_STATUS1
+          export $RUN_STATUS
         shell: bash
