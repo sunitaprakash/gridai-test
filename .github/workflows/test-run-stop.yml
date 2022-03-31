@@ -17,6 +17,7 @@ jobs:
           gridai-key: ${{ secrets.GRIDAI_KEY }}
       - id: gridai-status
         run: |
+          export COLUMNS{512}
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }})
           echo $RUN_STATUS
         shell: bash
