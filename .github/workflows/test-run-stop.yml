@@ -1,0 +1,23 @@
+name: "test Environment variable"
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_name:
+        required: true
+        type: string
+jobs:
+  gridai-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: gridai-actions/gridai-login@main
+        with:
+          gridai-username: ${{ secrets.GRIDAI_USERNAME }} 
+          gridai-key: ${{ secrets.GRIDAI_KEY }}
+      - id: gridai-status
+        run: |
+          export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} )
+          export $RUN_STATUS1
+          export $RUN_STATUS
+        shell: bash
