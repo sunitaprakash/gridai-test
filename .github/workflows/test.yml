@@ -6,7 +6,6 @@ on:
       run_name:
         required: true
         type: string
-
 jobs:
   gridai-test:
     runs-on: ubuntu-latest
@@ -23,5 +22,3 @@ jobs:
           export RUN_STATUS=$(grid status ${{ secrets.GRIDAI_RUNNAME }} )
           echo $RUN_STATUS
         shell: bash
-        
- 
