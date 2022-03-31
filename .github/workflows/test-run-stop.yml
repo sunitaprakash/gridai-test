@@ -17,7 +17,7 @@ jobs:
           gridai-key: ${{ secrets.GRIDAI_KEY }}
       - id: gridai-prunname
         run: |
-           export P_RUN_NAME=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $7}' | cut -d '-' -f 1 | awk -F, '{print $2}')
+           export P_RUN_NAME=$(grid status ${{ secrets.GRIDAI_RUNNAME }} | awk '{print $2 "," $6}' | cut -d '-' -f 1 | awk -F, '{print $1}')
            echo $P_RUN_NAME
       - id: gridai-status
         run: |
